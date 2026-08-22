@@ -1,0 +1,983 @@
+{% extends "base.html" %}
+
+{% block title %}QR Code Generator — Free, Instant & Customisable | Atechabad Academy{% endblock %}
+{% block meta_description %}Generate QR codes instantly for URLs, text, Wi-Fi, contacts and more. Custom colours, PNG & SVG export, no sign-up. Free tool by Atechabad Academy.{% endblock %}
+{% block meta_keywords %}QR code generator, free QR code online, custom QR code, PNG SVG QR, Pakistan QR tool{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ════════════════════════════════════════════════════════════════
+   QR GENERATOR — Production UI
+   Design system: matches Atechabad (Inter, Playfair, #059669, dark)
+════════════════════════════════════════════════════════════════ */
+
+/* ── 1. HERO ──────────────────────────────────────────────── */
+.qr-hero {
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0a;
+    padding: 72px 24px 56px;
+    text-align: center;
+}
+/* Radial glow behind heading */
+.qr-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 420px;
+    background: radial-gradient(ellipse at center,
+        rgba(5,150,105,0.18) 0%,
+        rgba(5,150,105,0.06) 45%,
+        transparent 70%);
+    pointer-events: none;
+}
+/* Subtle grid pattern */
+.qr-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(5,150,105,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(5,150,105,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+.qr-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+.qr-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(5,150,105,0.10);
+    border: 1px solid rgba(5,150,105,0.28);
+    color: #34d399;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(4px);
+}
+.qr-badge i { font-size: 0.85rem; }
+
+.qr-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    font-weight: 800; color: #fff;
+    margin: 0 0 16px; line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+.qr-hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #059669, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.qr-hero p {
+    color: rgba(255,255,255,0.5);
+    font-size: 1.05rem; line-height: 1.7;
+    margin: 0 auto 32px; max-width: 520px;
+}
+
+/* Stats strip in hero */
+.qr-stats {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 8px;
+}
+.qr-stat-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px; padding: 7px 16px;
+    font-size: 0.78rem; color: rgba(255,255,255,0.5);
+    transition: border-color 0.2s, color 0.2s;
+}
+.qr-stat-pill:hover { border-color: rgba(5,150,105,0.35); color: #34d399; }
+.qr-stat-pill i { color: #059669; font-size: 0.82rem; }
+
+/* ── 2. MAIN TOOL GRID ────────────────────────────────────── */
+.qr-tool {
+    max-width: 1080px; margin: 0 auto;
+    padding: 48px 20px 88px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+}
+@media (max-width: 880px) {
+    .qr-tool { grid-template-columns: 1fr; }
+}
+
+/* ── 3. CARD SHELL ────────────────────────────────────────── */
+.qr-card {
+    background: #0f1923;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px;
+    overflow: hidden;
+}
+.qr-card + .qr-card { margin-top: 16px; }
+
+.qr-card-header {
+    display: flex; align-items: center; gap: 11px;
+    padding: 18px 22px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
+}
+.qr-card-header .ch-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(5,150,105,0.15);
+    border: 1px solid rgba(5,150,105,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: #34d399; font-size: 0.9rem; flex-shrink: 0;
+}
+.qr-card-header .ch-title {
+    font-size: 0.82rem; font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.qr-card-header .ch-sub {
+    font-size: 0.73rem; color: rgba(255,255,255,0.28);
+    margin-top: 1px;
+}
+
+.qr-card-body { padding: 22px; }
+
+/* ── 4. FORM ELEMENTS ─────────────────────────────────────── */
+.qr-field { margin-bottom: 18px; }
+.qr-field:last-child { margin-bottom: 0; }
+
+.qr-label {
+    display: block;
+    font-size: 0.78rem; font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* Textarea */
+.qr-textarea-wrap { position: relative; }
+.qr-textarea {
+    width: 100%; min-height: 108px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    color: #e5e7eb;
+    font-family: 'Inter', sans-serif; font-size: 0.9rem;
+    padding: 13px 90px 13px 14px;
+    resize: vertical; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box; line-height: 1.6;
+}
+.qr-textarea::placeholder { color: rgba(255,255,255,0.18); }
+.qr-textarea:focus {
+    border-color: rgba(5,150,105,0.6);
+    box-shadow: 0 0 0 3px rgba(5,150,105,0.08);
+    background: rgba(5,150,105,0.03);
+}
+.qr-copy-btn {
+    position: absolute; top: 11px; right: 11px;
+    background: rgba(5,150,105,0.12);
+    border: 1px solid rgba(5,150,105,0.2);
+    color: #34d399; border-radius: 7px;
+    padding: 5px 11px; font-size: 0.71rem;
+    font-weight: 700; font-family: 'Inter', sans-serif;
+    cursor: pointer; transition: all 0.18s; white-space: nowrap;
+}
+.qr-copy-btn:hover { background: rgba(5,150,105,0.22); color: #fff; }
+
+.qr-char-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-top: 7px;
+}
+.qr-char-count {
+    font-size: 0.72rem; color: rgba(255,255,255,0.25);
+    font-variant-numeric: tabular-nums;
+    transition: color 0.2s;
+}
+.qr-char-count.warn   { color: #f59e0b; }
+.qr-char-count.danger { color: #ef4444; }
+.qr-char-hint { font-size: 0.68rem; color: rgba(255,255,255,0.18); }
+
+/* Two-col grid for selects */
+.qr-grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 480px) { .qr-grid-2 { grid-template-columns: 1fr; } }
+
+/* Select */
+.qr-select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 10px;
+    color: #d1d5db;
+    font-family: 'Inter', sans-serif; font-size: 0.86rem;
+    padding: 10px 36px 10px 13px;
+    outline: none; cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 13px center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.qr-select option { background: #1c2a3a; color: #e5e7eb; }
+.qr-select:focus {
+    border-color: rgba(5,150,105,0.5);
+    box-shadow: 0 0 0 3px rgba(5,150,105,0.08);
+}
+
+/* Colour pickers */
+.qr-colour-pair {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 480px) { .qr-colour-pair { grid-template-columns: 1fr; } }
+
+.qr-colour-label {
+    font-size: 0.7rem; color: rgba(255,255,255,0.3);
+    margin-bottom: 6px; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.qr-colour-field {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 10px; padding: 9px 12px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+}
+.qr-colour-field:focus-within { border-color: rgba(5,150,105,0.5); }
+
+.qr-colour-swatch {
+    width: 28px; height: 28px; border-radius: 7px;
+    border: 2px solid rgba(255,255,255,0.15);
+    cursor: pointer; flex-shrink: 0;
+    position: relative; overflow: hidden;
+}
+.qr-colour-swatch input[type="color"] {
+    position: absolute; inset: -4px;
+    width: calc(100% + 8px); height: calc(100% + 8px);
+    border: none; cursor: pointer; opacity: 0;
+}
+.qr-colour-hex {
+    flex: 1; background: none; border: none; outline: none;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Courier New', monospace; font-size: 0.82rem;
+    text-transform: uppercase;
+}
+
+/* SVG notice */
+.qr-svg-notice {
+    display: none; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 8px; padding: 9px 13px;
+    font-size: 0.76rem; color: #fbbf24; margin-top: 10px;
+}
+.qr-svg-notice.show { display: flex; }
+.qr-svg-notice i { flex-shrink: 0; }
+
+/* Divider */
+.qr-divider {
+    border: none; border-top: 1px solid rgba(255,255,255,0.05);
+    margin: 20px 0;
+}
+
+/* ── 5. GENERATE BUTTON ───────────────────────────────────── */
+.qr-gen-btn {
+    width: 100%; padding: 15px 20px;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border: none; border-radius: 12px;
+    color: #fff; font-family: 'Inter', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.01em;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.22s; position: relative; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(5,150,105,0.2);
+}
+.qr-gen-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+    opacity: 0; transition: opacity 0.2s;
+}
+.qr-gen-btn:hover:not(:disabled)::before { opacity: 1; }
+.qr-gen-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(5,150,105,0.35);
+}
+.qr-gen-btn:active:not(:disabled) { transform: translateY(0); }
+.qr-gen-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Spinner */
+.qr-gen-btn .btn-spinner {
+    width: 17px; height: 17px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: qrspin 0.6s linear infinite;
+    display: none; flex-shrink: 0;
+}
+.qr-gen-btn.loading .btn-spinner { display: block; }
+.qr-gen-btn.loading .btn-label  { opacity: 0.6; }
+@keyframes qrspin { to { transform: rotate(360deg); } }
+
+/* ── 6. ERROR ALERT ───────────────────────────────────────── */
+.qr-error {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.22);
+    border-radius: 11px; padding: 13px 16px;
+    margin-bottom: 16px;
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+}
+.qr-error.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.qr-error i { color: #f87171; margin-top: 1px; flex-shrink: 0; }
+.qr-error span { font-size: 0.84rem; color: #fca5a5; line-height: 1.5; }
+
+/* ── 7. PREVIEW CARD (right column) ──────────────────────── */
+.qr-preview-card {
+    position: sticky; top: 86px;
+}
+
+/* Preview zone */
+.qr-preview-zone {
+    position: relative; min-height: 240px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px;
+    background:
+        radial-gradient(circle at 50% 50%,
+            rgba(5,150,105,0.05) 0%, transparent 65%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.4s;
+}
+.qr-preview-zone.has-qr {
+    background: radial-gradient(circle at 50% 50%,
+        rgba(5,150,105,0.10) 0%, transparent 65%);
+}
+
+/* Corner accents */
+.qr-corner {
+    position: absolute; width: 18px; height: 18px;
+    border-color: rgba(5,150,105,0.3); border-style: solid;
+    border-width: 0;
+}
+.qr-corner.tl { top: 12px; left: 12px; border-top-width: 2px; border-left-width: 2px; border-radius: 3px 0 0 0; }
+.qr-corner.tr { top: 12px; right: 12px; border-top-width: 2px; border-right-width: 2px; border-radius: 0 3px 0 0; }
+.qr-corner.bl { bottom: 12px; left: 12px; border-bottom-width: 2px; border-left-width: 2px; border-radius: 0 0 0 3px; }
+.qr-corner.br { bottom: 12px; right: 12px; border-bottom-width: 2px; border-right-width: 2px; border-radius: 0 0 3px 0; }
+
+/* Empty state */
+.qr-empty-state {
+    text-align: center; padding: 12px 0;
+}
+.qr-empty-icon {
+    width: 72px; height: 72px; margin: 0 auto 14px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; color: rgba(255,255,255,0.12);
+}
+.qr-empty-state p {
+    font-size: 0.82rem; color: rgba(255,255,255,0.22);
+    margin: 0; line-height: 1.5;
+}
+.qr-empty-state p strong {
+    display: block; font-size: 0.88rem;
+    color: rgba(255,255,255,0.3); margin-bottom: 4px; font-weight: 600;
+}
+
+/* QR image */
+#qr-img {
+    max-width: 100%; max-height: 300px;
+    border-radius: 10px;
+    display: none;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    image-rendering: pixelated;
+    transition: opacity 0.3s;
+}
+#qr-img.show { display: block; }
+
+/* Success glow ring on QR image */
+#qr-img.show {
+    animation: qrappear 0.35s ease both;
+}
+@keyframes qrappear {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Preview info bar */
+.qr-preview-info {
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    padding: 12px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    min-height: 48px;
+}
+.qr-preview-meta {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.qr-meta-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; padding: 3px 9px;
+    font-size: 0.7rem; font-weight: 600;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.qr-meta-chip.active {
+    background: rgba(5,150,105,0.12);
+    border-color: rgba(5,150,105,0.25);
+    color: #34d399;
+}
+
+/* Download button */
+.qr-dl-btn {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    width: 100%; padding: 13px 20px;
+    background: rgba(5,150,105,0.08);
+    border: 1px solid rgba(5,150,105,0.22);
+    border-radius: 0 0 17px 17px;   /* flush with card bottom */
+    color: #34d399;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+}
+.qr-dl-btn:hover:not(:disabled) {
+    background: rgba(5,150,105,0.18);
+    border-color: rgba(5,150,105,0.45);
+    color: #fff;
+}
+.qr-dl-btn:disabled {
+    opacity: 0.25; cursor: not-allowed;
+}
+
+/* Quality tag under preview */
+.qr-quality {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; padding: 14px 22px 18px;
+    font-size: 0.71rem; color: rgba(255,255,255,0.2);
+}
+.qr-quality i { color: #059669; }
+
+/* ── 8. HOW-TO STRIP (below tool) ────────────────────────── */
+.qr-how {
+    background: #0f1923;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 52px 24px;
+}
+.qr-how-inner { max-width: 900px; margin: 0 auto; }
+.qr-how h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: #fff; font-weight: 700;
+    margin: 0 0 36px;
+}
+.qr-how h2 span { color: #059669; }
+.qr-steps {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.qr-step {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 24px 20px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+.qr-step:hover {
+    border-color: rgba(5,150,105,0.25);
+    transform: translateY(-3px);
+}
+.qr-step-num {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #059669, #047857);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 800; color: #fff;
+    margin-bottom: 14px;
+}
+.qr-step h3 {
+    font-size: 0.92rem; font-weight: 700;
+    color: rgba(255,255,255,0.85); margin: 0 0 6px;
+}
+.qr-step p {
+    font-size: 0.79rem; color: rgba(255,255,255,0.35);
+    margin: 0; line-height: 1.6;
+}
+
+/* ── 9. RESPONSIVE TWEAKS ─────────────────────────────────── */
+@media (max-width: 600px) {
+    .qr-hero { padding: 52px 16px 40px; }
+    .qr-tool { padding: 28px 14px 60px; gap: 16px; }
+    .qr-card-body { padding: 16px; }
+    .qr-preview-zone { min-height: 200px; }
+    .qr-preview-card { position: static; }
+    .qr-dl-btn { border-radius: 0 0 16px 16px; }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ═══════════════════════════════════
+     HERO
+═══════════════════════════════════ -->
+<section class="qr-hero">
+    <div class="qr-hero-inner">
+        <div class="qr-badge">
+            <i class="fas fa-qrcode"></i> Free Online Tool — No Sign-Up Needed
+        </div>
+        <h1>Generate <em>QR Codes</em><br>in Seconds</h1>
+        <p>Turn any URL, text, Wi-Fi password, or contact into a scannable QR code. Fully customisable, instant preview, PNG &amp; SVG export.</p>
+        <div class="qr-stats">
+            <span class="qr-stat-pill"><i class="fas fa-lock"></i> No data stored</span>
+            <span class="qr-stat-pill"><i class="fas fa-file-image"></i> PNG &amp; SVG export</span>
+            <span class="qr-stat-pill"><i class="fas fa-palette"></i> Custom colours</span>
+            <span class="qr-stat-pill"><i class="fas fa-bolt"></i> Instant AJAX preview</span>
+            <span class="qr-stat-pill"><i class="fas fa-shield-alt"></i> High error correction</span>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════════
+     TOOL (form + preview)
+═══════════════════════════════════ -->
+<div class="qr-tool">
+
+    <!-- ── LEFT: Controls ── -->
+    <div>
+
+        <!-- Error alert -->
+        <div class="qr-error" id="qr-error" role="alert" aria-live="assertive">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="qr-error-msg">Something went wrong.</span>
+        </div>
+
+        <!-- Card 1: Input -->
+        <div class="qr-card">
+            <div class="qr-card-header">
+                <div class="ch-icon"><i class="fas fa-keyboard"></i></div>
+                <div>
+                    <div class="ch-title">Input Data</div>
+                    <div class="ch-sub">URL, plain text, Wi-Fi, contact info…</div>
+                </div>
+            </div>
+            <div class="qr-card-body">
+                <div class="qr-field">
+                    <label class="qr-label" for="qr-data">Content to encode</label>
+                    <div class="qr-textarea-wrap">
+                        <textarea
+                            id="qr-data"
+                            class="qr-textarea"
+                            placeholder="https://atechabad.com&#10;&#10;— or paste any text, Wi-Fi: WIFI:T:WPA;S:MyNet;P:pass123;;&#10;— contact vCard, raw text, anything…"
+                            maxlength="2048"
+                            aria-label="Content to encode into QR"
+                        ></textarea>
+                        <button class="qr-copy-btn" id="qr-copy-btn" type="button" title="Copy content to clipboard">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div class="qr-char-row">
+                        <span class="qr-char-count" id="qr-char">0 / 2048</span>
+                        <span class="qr-char-hint">Ctrl + Enter to generate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Options -->
+        <div class="qr-card">
+            <div class="qr-card-header">
+                <div class="ch-icon"><i class="fas fa-sliders-h"></i></div>
+                <div>
+                    <div class="ch-title">Customisation</div>
+                    <div class="ch-sub">Size, format, quiet zone, colours</div>
+                </div>
+            </div>
+            <div class="qr-card-body">
+
+                <!-- Size + Format -->
+                <div class="qr-field">
+                    <div class="qr-grid-2">
+                        <div>
+                            <label class="qr-label" for="qr-size">Size</label>
+                            <select id="qr-size" class="qr-select">
+                                <option value="small">Small — compact</option>
+                                <option value="medium" selected>Medium — recommended</option>
+                                <option value="large">Large — high-res print</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="qr-label" for="qr-format">Format</label>
+                            <select id="qr-format" class="qr-select">
+                                <option value="png" selected>PNG — raster</option>
+                                <option value="svg">SVG — vector / scalable</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Border -->
+                <div class="qr-field">
+                    <label class="qr-label" for="qr-border">Quiet zone (white border)</label>
+                    <select id="qr-border" class="qr-select">
+                        <option value="none">None — 0 modules</option>
+                        <option value="small">Small — 1 module</option>
+                        <option value="medium" selected>Standard — 2 modules (recommended)</option>
+                        <option value="large">Large — 4 modules</option>
+                    </select>
+                </div>
+
+                <hr class="qr-divider">
+
+                <!-- Colours -->
+                <div class="qr-field">
+                    <label class="qr-label">Colours</label>
+                    <div class="qr-colour-pair">
+                        <div>
+                            <div class="qr-colour-label">Foreground (dark modules)</div>
+                            <div class="qr-colour-field" id="fg-field">
+                                <div class="qr-colour-swatch" id="fg-swatch" style="background:#000000;">
+                                    <input type="color" id="qr-fg-picker" value="#000000" aria-label="Foreground colour">
+                                </div>
+                                <input type="text" id="qr-fg" class="qr-colour-hex" value="#000000" maxlength="7" spellcheck="false">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="qr-colour-label">Background (light modules)</div>
+                            <div class="qr-colour-field" id="bg-field">
+                                <div class="qr-colour-swatch" id="bg-swatch" style="background:#ffffff;">
+                                    <input type="color" id="qr-bg-picker" value="#ffffff" aria-label="Background colour">
+                                </div>
+                                <input type="text" id="qr-bg" class="qr-colour-hex" value="#ffffff" maxlength="7" spellcheck="false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qr-svg-notice" id="svg-notice">
+                        <i class="fas fa-info-circle"></i>
+                        SVG mode uses foreground colour only — background is transparent.
+                    </div>
+                </div>
+
+                <hr class="qr-divider">
+
+                <!-- CTA -->
+                <button class="qr-gen-btn" id="qr-gen-btn" type="button">
+                    <div class="btn-spinner"></div>
+                    <span class="btn-label"><i class="fas fa-qrcode"></i> &nbsp;Generate QR Code</span>
+                </button>
+
+            </div>
+        </div>
+    </div><!-- /left -->
+
+
+    <!-- ── RIGHT: Preview ── -->
+    <div class="qr-preview-card">
+        <div class="qr-card">
+
+            <!-- Preview zone -->
+            <div class="qr-preview-zone" id="qr-zone">
+                <div class="qr-corner tl"></div>
+                <div class="qr-corner tr"></div>
+                <div class="qr-corner bl"></div>
+                <div class="qr-corner br"></div>
+
+                <div class="qr-empty-state" id="qr-empty">
+                    <div class="qr-empty-icon"><i class="fas fa-qrcode"></i></div>
+                    <p>
+                        <strong>No QR code yet</strong>
+                        Enter content &amp; click Generate
+                    </p>
+                </div>
+
+                <img id="qr-img" src="" alt="Generated QR code" draggable="false">
+            </div>
+
+            <!-- Meta chips -->
+            <div class="qr-preview-info">
+                <div class="qr-preview-meta">
+                    <span class="qr-meta-chip" id="chip-fmt">PNG</span>
+                    <span class="qr-meta-chip" id="chip-size">Medium</span>
+                    <span class="qr-meta-chip" id="chip-err">High EC</span>
+                </div>
+                <span class="qr-meta-chip active" id="chip-ready" style="display:none;">
+                    <i class="fas fa-check-circle"></i> Ready
+                </span>
+            </div>
+
+            <!-- Download -->
+            <button class="qr-dl-btn" id="qr-dl-btn" type="button" disabled>
+                <i class="fas fa-download"></i> Download QR Code
+            </button>
+
+        </div>
+
+        <!-- Quality note -->
+        <div class="qr-quality">
+            <i class="fas fa-shield-alt"></i>
+            Error correction Level H — survives 30% damage
+        </div>
+    </div>
+
+</div><!-- /.qr-tool -->
+
+
+<!-- ═══════════════════════════════════
+     HOW-TO STRIP
+═══════════════════════════════════ -->
+<section class="qr-how">
+    <div class="qr-how-inner">
+        <h2>How to <span>use it</span></h2>
+        <div class="qr-steps">
+            <div class="qr-step">
+                <div class="qr-step-num">1</div>
+                <h3>Paste your content</h3>
+                <p>Enter a URL, plain text, Wi-Fi credentials, vCard contact, or any string you want encoded.</p>
+            </div>
+            <div class="qr-step">
+                <div class="qr-step-num">2</div>
+                <h3>Pick your style</h3>
+                <p>Choose output size, file format (PNG or scalable SVG), quiet-zone width, and custom colours.</p>
+            </div>
+            <div class="qr-step">
+                <div class="qr-step-num">3</div>
+                <h3>Generate &amp; preview</h3>
+                <p>Hit Generate — the QR appears instantly on the right. No page reload. No waiting.</p>
+            </div>
+            <div class="qr-step">
+                <div class="qr-step-num">4</div>
+                <h3>Download &amp; share</h3>
+                <p>Click Download to save your QR code. Use it in print, web, social, or anywhere else.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+(function () {
+    "use strict";
+
+    /* ── refs ───────────────────────────────────────────── */
+    var dataEl    = document.getElementById("qr-data");
+    var sizeEl    = document.getElementById("qr-size");
+    var fmtEl     = document.getElementById("qr-format");
+    var borderEl  = document.getElementById("qr-border");
+    var fgPicker  = document.getElementById("qr-fg-picker");
+    var fgHex     = document.getElementById("qr-fg");
+    var fgSwatch  = document.getElementById("fg-swatch");
+    var bgPicker  = document.getElementById("qr-bg-picker");
+    var bgHex     = document.getElementById("qr-bg");
+    var bgSwatch  = document.getElementById("bg-swatch");
+    var bgField   = document.getElementById("bg-field");
+    var svgNotice = document.getElementById("svg-notice");
+    var genBtn    = document.getElementById("qr-gen-btn");
+    var dlBtn     = document.getElementById("qr-dl-btn");
+    var qrImg     = document.getElementById("qr-img");
+    var qrZone    = document.getElementById("qr-zone");
+    var qrEmpty   = document.getElementById("qr-empty");
+    var errBox    = document.getElementById("qr-error");
+    var errMsg    = document.getElementById("qr-error-msg");
+    var charEl    = document.getElementById("qr-char");
+    var copyBtn   = document.getElementById("qr-copy-btn");
+    var chipFmt   = document.getElementById("chip-fmt");
+    var chipSize  = document.getElementById("chip-size");
+    var chipReady = document.getElementById("chip-ready");
+
+    var HEX_RE  = /^#[0-9a-fA-F]{6}$/;
+    var MAX     = 2048;
+    var _ready  = false;   /* has a QR been generated? */
+    var _curFmt = "png";
+
+    /* ── colour helpers ─────────────────────────────────── */
+    function validHex(v) { return HEX_RE.test(v.trim()); }
+
+    function bindColour(picker, hexIn, swatch) {
+        function syncSwatch(val) {
+            swatch.style.background = validHex(val) ? val : "#000";
+        }
+        picker.addEventListener("input", function () {
+            hexIn.value = picker.value;
+            syncSwatch(picker.value);
+        });
+        hexIn.addEventListener("input", function () {
+            var v = hexIn.value.trim();
+            if (!v.startsWith("#")) v = "#" + v;
+            hexIn.value = v;
+            if (validHex(v)) { picker.value = v; syncSwatch(v); }
+        });
+        /* Make the swatch div itself open the colour picker */
+        swatch.addEventListener("click", function () { picker.click(); });
+    }
+    bindColour(fgPicker, fgHex, fgSwatch);
+    bindColour(bgPicker, bgHex, bgSwatch);
+
+    /* ── format change → show/hide bg picker ────────────── */
+    fmtEl.addEventListener("change", function () {
+        var isSvg = fmtEl.value === "svg";
+        bgField.style.opacity      = isSvg ? "0.3" : "1";
+        bgField.style.pointerEvents= isSvg ? "none" : "auto";
+        svgNotice.classList.toggle("show", isSvg);
+        updateChips();
+    });
+
+    /* ── chip labels ─────────────────────────────────────── */
+    function updateChips() {
+        var fmtLabel  = fmtEl.value.toUpperCase();
+        var sizeLabel = { small:"Small", medium:"Medium", large:"Large" }[sizeEl.value] || "Medium";
+        chipFmt.textContent  = fmtLabel;
+        chipSize.textContent = sizeLabel;
+        if (_ready) {
+            chipFmt.classList.add("active");
+            chipSize.classList.add("active");
+        }
+    }
+    sizeEl.addEventListener("change", updateChips);
+    fmtEl.addEventListener("change", updateChips);
+    updateChips();
+
+    /* ── character counter ───────────────────────────────── */
+    dataEl.addEventListener("input", function () {
+        var n = dataEl.value.length;
+        charEl.textContent = n + " / " + MAX;
+        charEl.className = "qr-char-count" +
+            (n > MAX * 0.9 ? " danger" : n > MAX * 0.75 ? " warn" : "");
+    });
+
+    /* ── copy button ─────────────────────────────────────── */
+    copyBtn.addEventListener("click", function () {
+        var t = dataEl.value;
+        if (!t) return;
+        navigator.clipboard.writeText(t).then(function () {
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(function () {
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2200);
+        }).catch(function () {
+            /* fallback for older browsers */
+            dataEl.select();
+            document.execCommand("copy");
+        });
+    });
+
+    /* ── error helpers ───────────────────────────────────── */
+    var _errTimer = null;
+    function showErr(msg) {
+        errMsg.textContent = msg;
+        errBox.classList.add("show");
+        clearTimeout(_errTimer);
+        _errTimer = setTimeout(function () { errBox.classList.remove("show"); }, 7000);
+    }
+    function hideErr() { errBox.classList.remove("show"); }
+
+    /* ── loading state ───────────────────────────────────── */
+    function setLoading(on) {
+        genBtn.disabled = on;
+        genBtn.classList.toggle("loading", on);
+    }
+
+    /* ── render preview ──────────────────────────────────── */
+    function showQR(src, fmt) {
+        _ready  = true;
+        _curFmt = fmt;
+
+        /* swap placeholder for image */
+        qrEmpty.style.display = "none";
+        qrImg.classList.remove("show");
+
+        /* force reflow so animation replays */
+        void qrImg.offsetWidth;
+
+        qrImg.src = src;
+        qrImg.classList.add("show");
+        qrZone.classList.add("has-qr");
+
+        /* enable download */
+        dlBtn.disabled = false;
+
+        /* chips */
+        chipFmt.classList.add("active");
+        chipSize.classList.add("active");
+        chipReady.style.display = "";
+
+        updateChips();
+    }
+
+    /* ── build FormData ──────────────────────────────────── */
+    function formData() {
+        var fd = new FormData();
+        fd.append("data",     dataEl.value.trim());
+        fd.append("size",     sizeEl.value);
+        fd.append("format",   fmtEl.value);
+        fd.append("border",   borderEl.value);
+        fd.append("fg_color", fgHex.value.trim() || "#000000");
+        fd.append("bg_color", bgHex.value.trim() || "#ffffff");
+        return fd;
+    }
+
+    /* ── AJAX generate ───────────────────────────────────── */
+    genBtn.addEventListener("click", function () {
+        hideErr();
+        var text = dataEl.value.trim();
+        if (!text) {
+            showErr("Please enter some content to encode.");
+            dataEl.focus(); return;
+        }
+        setLoading(true); dlBtn.disabled = true;
+
+        fetch("{{ url_for('qr_generator.generate') }}", {
+            method: "POST", body: formData()
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+            setLoading(false);
+            if (j.error) { showErr(j.error); return; }
+            showQR(j.preview, j.format);
+        })
+        .catch(function (e) {
+            setLoading(false);
+            showErr("Network error — please check your connection.");
+            console.error("[QR]", e);
+        });
+    });
+
+    /* Ctrl/Cmd + Enter shortcut */
+    dataEl.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { genBtn.click(); }
+    });
+
+    /* ── Download (POST form → file stream) ──────────────── */
+    dlBtn.addEventListener("click", function () {
+        if (!_ready) return;
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "{{ url_for('qr_generator.download') }}";
+        form.style.display = "none";
+        var fields = {
+            data: dataEl.value.trim(), size: sizeEl.value,
+            format: fmtEl.value, border: borderEl.value,
+            fg_color: fgHex.value || "#000000",
+            bg_color: bgHex.value || "#ffffff"
+        };
+        Object.keys(fields).forEach(function (k) {
+            var i = document.createElement("input");
+            i.type = "hidden"; i.name = k; i.value = fields[k];
+            form.appendChild(i);
+        });
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+    });
+
+})();
+</script>
+{% endblock %}

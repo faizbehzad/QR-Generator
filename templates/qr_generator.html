@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Free QR Code & Barcode Generator Online | Atechabad Academy{% endblock %}
+{% block meta_description %}Create QR codes for URLs, text, maps, Wi-Fi, WhatsApp, PDFs, audio and apps. Generate Code 128, EAN-13 and UPC-A barcodes with PNG preview and download.{% endblock %}
+{% block meta_keywords %}QR code generator, free QR code generator, barcode generator, Wi-Fi QR code, WhatsApp QR code, Code 128 barcode, EAN-13 barcode, UPC-A barcode{% endblock %}
+{% block canonical %}https://www.atechabad.com/qr-generator{% endblock %}
+{% block og_title %}Free QR Code & Barcode Generator | Atechabad Academy{% endblock %}
+{% block og_description %}Generate QR codes and barcodes online with instant PNG preview and download. Supports URL, text, Wi-Fi, maps, WhatsApp, PDFs, audio, apps and product barcodes.{% endblock %}
+{% block tw_title %}Free QR Code & Barcode Generator | Atechabad Academy{% endblock %}
+{% block tw_description %}Create QR codes and barcodes online with PNG preview and download.{% endblock %}
+
+{% block extra_css %}
+<style>
+.pc-hero{background:#041411;background-image:radial-gradient(at 0% 0%,rgba(16,185,129,.32) 0,transparent 46%),radial-gradient(at 100% 10%,rgba(56,189,248,.22) 0,transparent 42%),linear-gradient(135deg,#042f2e,#047857 58%,#10b981);color:#fff;padding:112px 18px 112px;text-align:center;position:relative;overflow:hidden;min-height:420px}.pc-hero:before{content:"";position:absolute;inset:-80% -60% 0;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:46px 46px;transform:perspective(620px) rotateX(62deg) translateY(-20px);animation:heroGrid 28s linear infinite;opacity:.82;pointer-events:none}.pc-hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.16),transparent 32%),linear-gradient(180deg,transparent 0%,rgba(4,20,17,.3) 100%);pointer-events:none}.pc-hero>*{position:relative;z-index:2}.pc-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.2vw,4.1rem);line-height:1.08;margin:0 0 14px;font-weight:900;letter-spacing:0;text-shadow:0 14px 34px rgba(2,6,23,.34)}.pc-hero p{max-width:720px;margin:0 auto;color:rgba(255,255,255,.9);font-size:1.12rem;line-height:1.65;text-shadow:0 8px 22px rgba(2,6,23,.28)}.pc-hero-kicker{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.24);font-weight:800;padding:7px 14px;margin-bottom:18px;font-size:.78rem;text-transform:uppercase;backdrop-filter:blur(10px)}
+.hero-abstract{position:absolute;inset:0;z-index:1;pointer-events:none}.hero-abstract span{position:absolute;display:block;border:1px solid rgba(255,255,255,.18);background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.025));box-shadow:0 24px 70px rgba(2,6,23,.2);backdrop-filter:blur(10px)}.hero-abstract .scan-card{width:220px;height:128px;border-radius:24px;top:17%;left:18%;transform:rotate(-13deg);animation:softDrift 10s ease-in-out infinite}.hero-abstract .scan-card:before{content:"";position:absolute;left:22px;right:22px;top:32px;height:4px;border-radius:999px;background:rgba(52,211,153,.75);box-shadow:0 22px 0 rgba(255,255,255,.23),0 44px 0 rgba(255,255,255,.16)}.hero-abstract .scan-ring{width:190px;height:190px;border-radius:50%;right:18%;top:16%;background:radial-gradient(circle,transparent 40%,rgba(255,255,255,.14) 41%,rgba(255,255,255,.05) 62%,transparent 63%);animation:softDrift 12s ease-in-out infinite reverse}.hero-abstract .scan-line{height:2px;width:280px;border:0;border-radius:999px;left:50%;bottom:24%;transform:translateX(-50%) rotate(-8deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);box-shadow:0 0 28px rgba(125,211,252,.5);animation:scanSweep 4.8s ease-in-out infinite}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(58px);z-index:0;pointer-events:none;animation:orbFloat 13s ease-in-out infinite}.hero-orb.one{width:320px;height:320px;background:rgba(16,185,129,.28);top:2%;left:8%}.hero-orb.two{width:360px;height:360px;background:rgba(59,130,246,.2);right:6%;bottom:4%;animation-delay:-5s}.hero-float{position:absolute;width:142px;height:142px;border-radius:22px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);box-shadow:0 28px 70px rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.08);backdrop-filter:blur(12px);overflow:hidden;z-index:1;display:block;animation:heroFloat 8s ease-in-out infinite}.hero-float img{width:100%;height:100%;object-fit:contain;padding:16px;box-sizing:border-box;filter:drop-shadow(0 12px 22px rgba(0,0,0,.25))}.hero-float .tag{position:absolute;left:10px;bottom:10px;background:rgba(2,6,23,.72);color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 10px;font-size:.68rem;font-weight:850;backdrop-filter:blur(8px)}.hero-float.is-bright{background:rgba(255,255,255,.9)}.hero-float.is-bright .tag{background:#059669}.hero-float.qr-a{top:20%;left:6%;--rot:-12deg}.hero-float.qr-b{top:16%;right:7%;--rot:14deg;animation-delay:-2.5s;width:170px;height:170px}.hero-float.qr-c{bottom:13%;left:11%;--rot:8deg;animation-delay:-4s;width:132px;height:132px}.hero-float.qr-d{bottom:11%;right:13%;--rot:-9deg;animation-delay:-6s;width:146px;height:146px}@keyframes heroGrid{0%{transform:perspective(620px) rotateX(62deg) translateY(0)}100%{transform:perspective(620px) rotateX(62deg) translateY(46px)}}@keyframes heroFloat{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-18px) rotate(var(--rot,0deg))}}@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-24px) scale(1.06)}}@keyframes softDrift{0%,100%{translate:0 0}50%{translate:0 -18px}}@keyframes scanSweep{0%,100%{opacity:.35;translate:-90px 0}50%{opacity:1;translate:90px 0}}
+.tool-shell{max-width:1120px;margin:-64px auto 64px;padding:0 20px;position:relative;z-index:4}.tool-card{background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.56);border-radius:18px;padding:26px;box-shadow:0 24px 60px rgba(6,78,59,.14),inset 0 1px 0 rgba(255,255,255,.65);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(5px)}.qr-options-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 14px}.qr-options-head h2{margin:0;color:#1e293b;font-size:1rem;font-weight:950;display:flex;align-items:center;gap:9px}.qr-options-head span{color:#64748b;font-size:.78rem;font-weight:850}.qr-type-bar{display:flex;gap:12px;align-items:center;overflow-x:auto;padding:4px 2px 24px;margin-bottom:24px;border-bottom:1px solid rgba(226,232,240,.78);scrollbar-width:thin;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}.qr-type-btn{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:0 18px;border:1px solid rgba(226,232,240,.9);border-radius:9px;background:rgba(255,255,255,.82);color:#1f2937;font-size:.96rem;font-weight:800;white-space:nowrap;cursor:pointer;transition:.18s;scroll-snap-align:start;flex:0 0 auto}.qr-type-btn i{font-size:1rem;color:#334155}.qr-type-btn:hover{border-color:#cbd5e1;transform:translateY(-1px)}.qr-type-btn.active{background:rgba(243,220,247,.9);border-color:#ecc7f2;color:#8a1bb1}.qr-type-btn.active i{color:#b020d0}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}.panel{background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:24px}.preview-panel{background:#fff;text-align:center;position:sticky;top:92px}.panel-title{font-size:1.08rem;font-weight:900;color:#1e293b;margin-bottom:16px;display:flex;align-items:center;gap:9px}.field{margin-bottom:16px}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.label{display:block;color:#334155;font-size:.88rem;font-weight:850;margin-bottom:8px}.input,.select{width:100%;padding:14px 16px;font-size:1rem;font-weight:700;color:#334155;background:#fff;border:2px solid #cbd5e1;border-radius:12px;box-sizing:border-box}.textarea{min-height:142px;resize:vertical;line-height:1.5;font-family:inherit}.input:focus,.select:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.1)}.mode-fields{display:none}.mode-fields.active{display:block}.hint{font-size:.78rem;color:#64748b;margin-top:7px}.alert{display:flex;align-items:center;gap:10px;padding:13px 14px;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:12px;margin-bottom:18px;font-weight:750}
+.action-btn,.download-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 22px;margin-top:14px;color:#fff;border:0;border-radius:999px;font-size:1.02rem;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 8px 20px rgba(16,185,129,.28);text-decoration:none}.action-btn:hover,.download-btn:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(16,185,129,.38)}.preview-box{min-height:282px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f8fafc,#fff);border:1px solid #e2e8f0;border-radius:14px;padding:18px}.preview-box img{max-width:100%;height:auto;image-rendering:pixelated}.empty{color:#94a3b8;font-weight:800}.empty i{font-size:3.2rem;margin-bottom:10px;color:#cbd5e1}
+.barcode-section{margin-top:26px;padding-top:26px;border-top:1px solid #e5e7eb}.barcode-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}.barcode-preview{min-height:196px}.barcode-preview img{max-width:100%;height:auto}.mode-pill{display:inline-flex;align-items:center;gap:8px;background:#ecfdf5;color:#047857;border:1px solid #bbf7d0;border-radius:999px;padding:7px 12px;font-size:.78rem;font-weight:900;margin-bottom:14px}
+.info-section{max-width:1120px;margin:0 auto 72px;padding:0 20px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.info-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;box-shadow:0 12px 32px rgba(15,23,42,.06)}.info-card h2,.info-card h3{color:#1e293b;margin:0 0 12px;font-size:1.25rem}.info-card p,.info-card li{color:#475569;line-height:1.65}.info-card ul{margin:0;padding-left:20px}.faq-list details{border-top:1px solid #e5e7eb;padding:14px 0}.faq-list details:first-child{border-top:0}.faq-list summary{cursor:pointer;font-weight:900;color:#334155}.faq-list p{margin:10px 0 0}
+@media(min-width:760px) and (max-width:1079px){.hero-float{opacity:.44}.hero-float.qr-a{left:1%;top:20%;width:116px;height:116px}.hero-float.qr-b{right:1%;top:20%;width:128px;height:128px}.hero-float.qr-c,.hero-float.qr-d{display:none}.hero-abstract .scan-card{left:8%;opacity:.5}.hero-abstract .scan-ring{right:7%;opacity:.5}}
+@media(max-width:920px){.workspace,.barcode-layout{grid-template-columns:1fr}.preview-panel{position:static}.tool-card{padding:18px}.field-grid{grid-template-columns:1fr}.pc-hero{padding:94px 18px 96px;min-height:340px}.qr-options-head{margin-bottom:10px}.qr-type-bar{gap:10px;padding:6px 2px 18px}.qr-type-btn{padding:0 14px;font-size:.88rem;min-height:44px;border-color:#dbe3ee;box-shadow:0 6px 16px rgba(15,23,42,.05)}.preview-box{min-height:220px}}
+@media(max-width:920px){.info-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.hero-float{opacity:.24}.hero-float .tag{display:none}.hero-float img{padding:12px}.hero-float.qr-a{width:86px;height:86px;left:-18px;top:24%}.hero-float.qr-b{width:92px;height:92px;right:-20px;top:19%}.hero-float.qr-c{width:78px;height:78px;left:6%;bottom:13%}.hero-float.qr-d{display:none}.hero-abstract .scan-card{width:160px;height:94px;left:-28px;top:62%;opacity:.33}.hero-abstract .scan-ring{width:140px;height:140px;right:-42px;top:48%;opacity:.32}.hero-abstract .scan-line{width:190px;bottom:18%}}
+@media(max-width:520px){.tool-shell,.info-section{padding:0 12px}.tool-card,.panel,.info-card{border-radius:14px;padding:16px}.qr-options-head{align-items:flex-start;flex-direction:column;gap:4px}.qr-options-head h2{font-size:.98rem}.qr-options-head span{font-size:.74rem}.qr-type-bar{margin-left:-16px;margin-right:-16px;padding:6px 16px 16px;gap:8px}.qr-type-bar::-webkit-scrollbar{display:none}.qr-type-btn{min-height:42px;padding:0 12px;font-size:.82rem;border-radius:12px}.qr-type-btn i{font-size:.92rem}.pc-hero h1{font-size:2rem}.pc-hero p{font-size:.98rem}.action-btn,.download-btn{font-size:.95rem;padding:14px 16px}.input,.select{padding:13px 14px}}
+</style>
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Atechabad QR Code and Barcode Generator",
+  "url": "https://www.atechabad.com/qr-generator",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "isAccessibleForFree": true,
+  "featureList": [
+    "URL QR code generator",
+    "Text QR code generator",
+    "Map QR code generator",
+    "Wi-Fi QR code generator",
+    "WhatsApp QR code generator",
+    "PDF QR code generator",
+    "Audio QR code generator",
+    "App link QR code generator",
+    "Code 128 barcode generator",
+    "EAN-13 barcode generator",
+    "UPC-A barcode generator"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Atechabad Academy",
+    "url": "https://www.atechabad.com"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What QR code types can I create?","acceptedAnswer":{"@type":"Answer","text":"You can create QR codes for website links, app store links, plain text, map locations, Wi-Fi networks, audio URLs, PDF URLs and WhatsApp chats."}},
+    {"@type":"Question","name":"Can I download the generated QR code?","acceptedAnswer":{"@type":"Answer","text":"Yes. After generating a QR code, you can preview it on the page and download it as a PNG image."}},
+    {"@type":"Question","name":"Which barcode formats are supported?","acceptedAnswer":{"@type":"Answer","text":"The barcode generator supports Code 128, EAN-13 and UPC-A barcode formats with PNG preview and download."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://www.atechabad.com/"},
+    {"@type":"ListItem","position":2,"name":"QR Generator","item":"https://www.atechabad.com/qr-generator"}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="pc-hero">
+    <div class="hero-orb one"></div>
+    <div class="hero-orb two"></div>
+    <div class="hero-abstract" aria-hidden="true">
+        <span class="scan-card"></span>
+        <span class="scan-ring"></span>
+        <span class="scan-line"></span>
+    </div>
+    <div class="hero-float qr-a is-bright" aria-hidden="true">
+        <img src="{{ url_for('qr_generator.static', filename='img/qrcodeoverlay.png') }}" alt="">
+        <span class="tag">URL QR</span>
+    </div>
+    <div class="hero-float qr-b" aria-hidden="true">
+        <img src="{{ url_for('qr_generator.static', filename='img/qroverlay.webp') }}" alt="">
+        <span class="tag">Smart Scan</span>
+    </div>
+    <div class="hero-float qr-c is-bright" aria-hidden="true">
+        <img src="{{ url_for('qr_generator.static', filename='img/baroverlay.webp') }}" alt="">
+        <span class="tag">Barcode</span>
+    </div>
+    <div class="hero-float qr-d" aria-hidden="true">
+        <img src="{{ url_for('qr_generator.static', filename='img/qrcodeoverlay2.png') }}" alt="">
+        <span class="tag">Wi-Fi QR</span>
+    </div>
+    <span class="pc-hero-kicker"><i class="fas fa-qrcode"></i> Generator Studio</span>
+    <h1>QR & Barcode Generator</h1>
+    <p>Create QR codes for links, apps, text, maps, Wi-Fi, audio, PDFs, WhatsApp, plus product barcodes.</p>
+</section>
+
+<section class="tool-shell">
+    <div class="tool-card">
+        <div class="qr-options-head">
+            <h2><i class="fas fa-sliders"></i> Choose QR Type</h2>
+            <span>Swipe to see all options</span>
+        </div>
+        <div class="qr-type-bar" role="tablist" aria-label="QR code content type options">
+            <button class="qr-type-btn active" data-mode="url" role="tab" aria-selected="true" type="button"><i class="fas fa-link"></i> URL / Link</button>
+            <button class="qr-type-btn" data-mode="app" role="tab" aria-selected="false" type="button"><i class="fas fa-mobile-screen-button"></i> Play Market / App Store</button>
+            <button class="qr-type-btn" data-mode="text" role="tab" aria-selected="false" type="button"><i class="fas fa-align-left"></i> Text</button>
+            <button class="qr-type-btn" data-mode="map" role="tab" aria-selected="false" type="button"><i class="fas fa-map-location-dot"></i> Map</button>
+            <button class="qr-type-btn" data-mode="wifi" role="tab" aria-selected="false" type="button"><i class="fas fa-wifi"></i> Wi-Fi</button>
+            <button class="qr-type-btn" data-mode="audio" role="tab" aria-selected="false" type="button"><i class="fas fa-music"></i> Audio</button>
+            <button class="qr-type-btn" data-mode="pdf" role="tab" aria-selected="false" type="button"><i class="far fa-file-pdf"></i> PDF</button>
+            <button class="qr-type-btn" data-mode="whatsapp" role="tab" aria-selected="false" type="button"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+        </div>
+
+        {% if error %}<div class="alert"><i class="fas fa-exclamation-circle"></i><span>{{ error }}</span></div>{% endif %}
+
+        <div class="workspace">
+            <form method="post" action="{{ url_for('qr_generator.index') }}" class="panel" id="qrForm">
+                <input type="hidden" name="action" value="qr">
+                <input type="hidden" name="qr_mode" id="qrMode" value="{{ qr_mode }}">
+                <input type="hidden" name="qr_text" id="qrPayload" value="{{ qr_text }}">
+                <span class="mode-pill" id="modePill"><i class="fas fa-link"></i> URL / Link</span>
+                <div class="panel-title"><i class="fas fa-pen-to-square"></i> QR Content</div>
+
+                <div class="mode-fields active" data-panel="url">
+                    <div class="field"><label class="label" for="url_value">Website URL</label><input class="input" id="url_value" name="url_value" value="{{ form_values.get('url_value', '') }}" placeholder="https://atechabad.com"></div>
+                </div>
+                <div class="mode-fields" data-panel="app">
+                    <div class="field"><label class="label" for="app_url">App Store / Play Store Link</label><input class="input" id="app_url" name="app_url" value="{{ form_values.get('app_url', '') }}" placeholder="https://play.google.com/store/apps/details?id=..."></div>
+                </div>
+                <div class="mode-fields" data-panel="text">
+                    <div class="field"><label class="label" for="text_value">Text</label><textarea class="input textarea" id="text_value" name="text_value" placeholder="Type the text you want inside the QR">{{ form_values.get('text_value', '') }}</textarea></div>
+                </div>
+                <div class="mode-fields" data-panel="map">
+                    <div class="field"><label class="label" for="map_location">Location</label><input class="input" id="map_location" name="map_location" value="{{ form_values.get('map_location', '') }}" placeholder="Islamabad, Pakistan"><div class="hint">Generates a Google Maps search QR.</div></div>
+                </div>
+                <div class="mode-fields" data-panel="wifi">
+                    <div class="field-grid">
+                        <div class="field"><label class="label" for="wifi_ssid">Network Name</label><input class="input" id="wifi_ssid" name="wifi_ssid" value="{{ form_values.get('wifi_ssid', '') }}" placeholder="Wi-Fi name"></div>
+                        <div class="field"><label class="label" for="wifi_password">Password</label><input class="input" id="wifi_password" name="wifi_password" value="{{ form_values.get('wifi_password', '') }}" placeholder="Password"></div>
+                    </div>
+                    <div class="field"><label class="label" for="wifi_encryption">Security</label><select class="select" id="wifi_encryption" name="wifi_encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">No password</option></select></div>
+                </div>
+                <div class="mode-fields" data-panel="audio">
+                    <div class="field"><label class="label" for="audio_url">Audio URL</label><input class="input" id="audio_url" name="audio_url" value="{{ form_values.get('audio_url', '') }}" placeholder="https://example.com/audio.mp3"></div>
+                </div>
+                <div class="mode-fields" data-panel="pdf">
+                    <div class="field"><label class="label" for="pdf_url">PDF URL</label><input class="input" id="pdf_url" name="pdf_url" value="{{ form_values.get('pdf_url', '') }}" placeholder="https://example.com/file.pdf"></div>
+                </div>
+                <div class="mode-fields" data-panel="whatsapp">
+                    <div class="field-grid">
+                        <div class="field"><label class="label" for="whatsapp_phone">Phone Number</label><input class="input" id="whatsapp_phone" name="whatsapp_phone" value="{{ form_values.get('whatsapp_phone', '') }}" placeholder="923001234567"></div>
+                        <div class="field"><label class="label" for="whatsapp_message">Message</label><input class="input" id="whatsapp_message" name="whatsapp_message" value="{{ form_values.get('whatsapp_message', '') }}" placeholder="Hello"></div>
+                    </div>
+                </div>
+
+                <div class="field"><label class="label" for="size">Size</label><select class="select" id="size" name="size"><option value="small"{% if selected_size == 'small' %} selected{% endif %}>Small</option><option value="medium"{% if selected_size == 'medium' %} selected{% endif %}>Medium</option><option value="large"{% if selected_size == 'large' %} selected{% endif %}>Large</option></select></div>
+                <button class="action-btn" type="submit"><i class="fas fa-qrcode"></i> Generate QR Code</button>
+            </form>
+
+            <div class="panel preview-panel">
+                <div class="panel-title"><i class="fas fa-image"></i> QR Preview</div>
+                <div class="preview-box">{% if qr_preview %}<img src="{{ qr_preview }}" alt="Generated QR code">{% else %}<div class="empty"><i class="fas fa-qrcode"></i><p>No QR code yet</p></div>{% endif %}</div>
+                {% if qr_preview %}<form method="post" action="{{ url_for('qr_generator.download') }}"><input type="hidden" name="qr_text" value="{{ qr_text }}"><input type="hidden" name="size" value="{{ selected_size }}"><button class="download-btn" type="submit"><i class="fas fa-download"></i> Download QR PNG</button></form>{% endif %}
+            </div>
+        </div>
+
+        <div class="barcode-section">
+            {% if barcode_error %}<div class="alert"><i class="fas fa-exclamation-circle"></i><span>{{ barcode_error }}</span></div>{% endif %}
+            <div class="barcode-layout">
+                <form method="post" action="{{ url_for('qr_generator.index') }}" class="panel">
+                    <input type="hidden" name="action" value="barcode">
+                    <div class="panel-title"><i class="fas fa-barcode"></i> Barcode Generator</div>
+                    <div class="field"><label class="label" for="barcode_text">Barcode Value</label><input class="input" id="barcode_text" name="barcode_text" value="{{ barcode_text }}" placeholder="Enter product code or number"></div>
+                    <div class="field"><label class="label" for="barcode_type">Barcode Type</label><select class="select" id="barcode_type" name="barcode_type"><option value="code128"{% if barcode_type == 'code128' %} selected{% endif %}>Code 128</option><option value="ean13"{% if barcode_type == 'ean13' %} selected{% endif %}>EAN-13</option><option value="upca"{% if barcode_type == 'upca' %} selected{% endif %}>UPC-A</option></select></div>
+                    <button class="action-btn" type="submit"><i class="fas fa-barcode"></i> Generate Barcode</button>
+                </form>
+                <div class="panel preview-panel">
+                    <div class="panel-title"><i class="fas fa-image"></i> Barcode Preview</div>
+                    <div class="preview-box barcode-preview">{% if barcode_preview %}<img src="{{ barcode_preview }}" alt="Generated barcode">{% else %}<div class="empty"><i class="fas fa-barcode"></i><p>No barcode yet</p></div>{% endif %}</div>
+                    {% if barcode_preview %}<form method="post" action="{{ url_for('qr_generator.barcode_download') }}"><input type="hidden" name="barcode_text" value="{{ barcode_text }}"><input type="hidden" name="barcode_type" value="{{ barcode_type }}"><button class="download-btn" type="submit"><i class="fas fa-download"></i> Download Barcode PNG</button></form>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-section" aria-label="QR and barcode generator information">
+    <div class="info-grid">
+        <article class="info-card">
+            <h2>Free QR Code Generator Online</h2>
+            <p>Atechabad's QR generator creates downloadable PNG QR codes for website links, app links, plain text, Google Maps locations, Wi-Fi networks, audio links, PDF links and WhatsApp chats.</p>
+            <ul>
+                <li>Use URL QR codes for websites, forms, portfolios and social profiles.</li>
+                <li>Use Wi-Fi QR codes to share network access without typing passwords.</li>
+                <li>Use WhatsApp QR codes to start chats with a phone number and message.</li>
+            </ul>
+        </article>
+        <article class="info-card">
+            <h2>Barcode Generator for Products</h2>
+            <p>The barcode generator supports Code 128 for general product or inventory codes, plus EAN-13 and UPC-A for numeric retail-style barcodes. Each barcode can be previewed and downloaded as PNG.</p>
+            <ul>
+                <li>Code 128 supports letters and numbers.</li>
+                <li>EAN-13 requires 12 or 13 digits.</li>
+                <li>UPC-A requires 11 or 12 digits.</li>
+            </ul>
+        </article>
+    </div>
+    <div class="info-card faq-list" style="margin-top:22px;">
+        <h2>QR & Barcode FAQs</h2>
+        <details><summary>What QR code types does this tool support?</summary><p>It supports URL, app store, text, map, Wi-Fi, audio, PDF and WhatsApp QR codes.</p></details>
+        <details><summary>Can I download the generated image?</summary><p>Yes. After preview generation, the tool shows a PNG download button for both QR codes and barcodes.</p></details>
+        <details><summary>Which barcode format should I choose?</summary><p>Use Code 128 for flexible internal codes, EAN-13 for 12 or 13 digit retail codes, and UPC-A for 11 or 12 digit UPC-style codes.</p></details>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+    var labels={url:["fa-link","URL / Link"],app:["fa-mobile-screen-button","Play Market / App Store"],text:["fa-align-left","Text"],map:["fa-map-location-dot","Map"],wifi:["fa-wifi","Wi-Fi"],audio:["fa-music","Audio"],pdf:["fa-file-pdf","PDF"],whatsapp:["fa-whatsapp","WhatsApp"]};
+    var btns=document.querySelectorAll(".qr-type-btn"), panels=document.querySelectorAll(".mode-fields"), mode=document.getElementById("qrMode"), pill=document.getElementById("modePill"), payload=document.getElementById("qrPayload"), form=document.getElementById("qrForm");
+    function setMode(next){mode.value=next;btns.forEach(function(b){var on=b.dataset.mode===next;b.classList.toggle("active",on);b.setAttribute("aria-selected",on?"true":"false")});panels.forEach(function(p){p.classList.toggle("active",p.dataset.panel===next)});var l=labels[next]||labels.url;pill.innerHTML='<i class="fas '+l[0]+'"></i> '+l[1];}
+    function val(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+    function build(){var m=mode.value;if(m==="app")return val("app_url");if(m==="text")return val("text_value");if(m==="map")return val("map_location");if(m==="wifi")return val("wifi_ssid");if(m==="audio")return val("audio_url");if(m==="pdf")return val("pdf_url");if(m==="whatsapp")return val("whatsapp_phone");return val("url_value");}
+    btns.forEach(function(b){b.addEventListener("click",function(){setMode(b.dataset.mode)})});
+    form.addEventListener("submit",function(){payload.value=build()});
+    setMode(mode.value||"url");
+})();
+</script>
+{% endblock %}
