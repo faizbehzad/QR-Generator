@@ -5,7 +5,7 @@ from pathlib import Path
 from flask import Flask, redirect, url_for as flask_url_for
 from jinja2 import ChoiceLoader, FileSystemLoader
 
-from QR_generator.routes import qr_generator_bp
+from routes import qr_generator_bp
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BASE_DIR.parent
